@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Облик и природа · Шепот Рюу</title>
+    <style>
+        /* Сброс стилей и основные шрифты */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+
+            /* Градиентный фон (как на главной) */
+            background: linear-gradient(
+                180deg,
+                #030514 0%,
+                #0c1a24 15%,
+                #132c35 30%,
+                #1e3b48 45%,
+                #2d4a5a 60%,
+                #3a5b6b 70%,
+                #4b6f82 80%,
+                #608a9a 87%,
+                #8bb4c0 93%,
+                #c9dae0 97%,
+                #e6e2da 100%
+            );
+            background-attachment: fixed;
+            color: #d6d0c4;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            margin: 0;
+        }
+
+        /* Звезды */
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: visible;
+        }
+
+        .star {
+            position: absolute;
+            color: rgba(230, 220, 200, 0.6);
+            user-select: none;
+            white-space: nowrap;
+            animation: twinkle 4s infinite ease-in-out;
+            transform-origin: center;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.2; transform: scale(0.8); }
+        }
+
+        /* Основной контейнер */
+        .main-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(22, 24, 32, 0.85);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(170, 150, 130, 0.25);
+            border-radius: 32px 32px 24px 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(200, 180, 150, 0.1) inset;
+            padding: 2.5rem 2.5rem;
+        }
+
+        /* Верхний декор */
+        .header-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            opacity: 0.7;
+            font-size: 1.8rem;
+            color: #a88e6b;
+            letter-spacing: 6px;
+        }
+
+        /* Заголовок страницы */
+        h1 {
+            font-family: 'venera_initial', 'Palatino', 'Georgia', serif;
+            font-weight: 300;
+            font-size: 3.8rem;
+            text-align: center;
+            margin-bottom: 0.25rem;
+            color: #ece4d7;
+            text-shadow: 0 0 10px rgba(210, 190, 160, 0.4), 0 4px 8px rgba(0, 0, 0, 0.6);
+            letter-spacing: 6px;
+            word-break: break-word;
+        }
+
+        .subhead {
+            text-align: center;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #bcae92;
+            border-top: 1px dashed #5f6b5f;
+            border-bottom: 1px dashed #5f6b5f;
+            padding: 0.8rem 0;
+            margin: 1.5rem 0 2.5rem 0;
+            word-spacing: 4px;
+            background: rgba(10, 12, 16, 0.3);
+        }
+
+        /* Стили для блоков с информацией */
+        .section-title {
+            font-family: 'venera_initial', 'Palatino', 'Georgia', serif;
+            font-size: 2.2rem;
+            color: #d4b68a;
+            margin: 2.5rem 0 1.5rem 0;
+            letter-spacing: 3px;
+            border-bottom: 1px solid #5f6b5f;
+            padding-bottom: 0.5rem;
+            text-shadow: 0 0 8px rgba(210, 190, 160, 0.3);
+        }
+
+        .subsection-title {
+            font-family: 'venera_initial', 'Palatino', 'Georgia', serif;
+            font-size: 1.6rem;
+            color: #c8b69c;
+            margin: 1.8rem 0 1rem 0;
+            letter-spacing: 2px;
+        }
+
+        /* Сетка для контента */
+        .content-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            align-items: flex-start;
+        }
+
+        .content-text {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .content-text p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        /* МЕСТА ДЛЯ КАРТИНОК - ОЧЕНЬ ЗАМЕТНЫЕ! */
+        .image-placeholder {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(30, 33, 42, 0.6);
+            border: 3px dashed #bfa67a;
+            border-radius: 24px 8px 24px 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(191, 166, 122, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            border-color: #d5bb8b;
+            box-shadow: 0 0 30px rgba(191, 166, 122, 0.4);
+            background: rgba(40, 45, 55, 0.7);
+        }
+
+        .placeholder-icon {
+            font-size: 4rem;
+            color: #bfa67a;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 8px #9e8f72);
+        }
+
+        .placeholder-text {
+            color: #b7a98b;
+            font-style: italic;
+            font-size: 1rem;
+            background: rgba(0,0,0,0.3);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            border: 1px solid #6c7a6b;
+        }
+
+        /* Большое место для главного изображения */
+        .hero-image-placeholder {
+            width: 100%;
+            min-height: 250px;
+            background: rgba(30, 33, 42, 0.6);
+            border: 3px dashed #bfa67a;
+            border-radius: 48px 16px 48px 16px;
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            box-shadow: 0 0 20px rgba(191, 166, 122, 0.2);
+        }
+
+        .hero-image-placeholder .placeholder-icon {
+            font-size: 5rem;
+        }
+
+        /* Список характеристик */
+        .feature-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "⸙";
+            position: absolute;
+            left: 0;
+            color: #bfa67a;
+            font-size: 1.2rem;
+        }
+
+        /* Кнопка возврата */
+        .back-button {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #c7b594;
+            text-decoration: none;
+            border: 1px solid #91856c;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            background: #232d28;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #2d3a33;
+            border-color: #bfa67a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #7c886b, #d5bb8b, #7c886b, transparent);
+            margin: 2rem 0;
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: #6b685e;
+            font-size: 0.9rem;
+            border-top: 1px solid #334033;
+            padding-top: 1.5rem;
+            letter-spacing: 3px;
+        }
+
+        /* Подключение шрифтов */
+        @font-face {
+            font-family: 'Czizh body';
+            src: url('czizh_body.woff2') format('woff2'),
+                 url('czizh_body.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'venera_initial';
+            src: url('venera_initial.woff2') format('woff2'),
+                 url('venera_initial.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        .czizh-text {
+            font-family: 'Czizh body', 'Georgia', 'Times New Roman', serif !important;
+        }
+
+        .venera-title {
+            font-family: 'venera_initial', 'Palatino', 'Georgia', serif;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Контейнер для звезд -->
+<div class="stars-container">
+    <script>
+        (function() {
+            const starsContainer = document.currentScript.parentNode;
+            const symbols = ['✧', '✦', '⋆', '☆', '༄', '༒', '·', '∘', '˙', '❀', '✶', '·', '。', '°', '☾', '·', '·', '·'];
+
+            for (let i = 0; i < 400; i++) {
+                const star = document.createElement('span');
+                star.className = 'star';
+                const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                star.textContent = randomSymbol;
+                const top = Math.random() * 300;
+                const left = Math.random() * 100;
+                const size = 1 + Math.random() * 8;
+                const opacity = 0.1 + Math.random() * 0.5;
+                star.style.top = top + '%';
+                star.style.left = left + '%';
+                star.style.fontSize = size + 'px';
+                star.style.opacity = opacity;
+                star.style.animation = 'twinkle ' + (2 + Math.random() * 4) + 's infinite ease-in-out';
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                starsContainer.appendChild(star);
+            }
+
+            for (let i = 0; i < 200; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'star';
+                dot.textContent = '·';
+                const top = Math.random() * 200;
+                const left = Math.random() * 100;
+                const size = 1 + Math.random() * 3;
+                dot.style.top = top + '%';
+                dot.style.left = left + '%';
+                dot.style.fontSize = size + 'px';
+                dot.style.opacity = 0.1 + Math.random() * 0.3;
+                dot.style.animation = 'none';
+                starsContainer.appendChild(dot);
+            }
+        })();
+    </script>
+</div>
+
+<!-- Основной контент -->
+<div class="main-wrapper">
+
+    <!-- Верхний декор -->
+    <div class="header-decoration">
+        <span>⁺˚࿐⋆｡°✩₊⋆˖⁺‧₊༯‧⁺˖⋆₊✩°𓆂｡⋆ྀི˚⁺⋆｡ﾟ𓆱｡⋆｡ ﾟ｡⋆</span>
+    </div>
+
+    <!-- Заголовок -->
+    <h1>ОБЛИК И ПРИРОДА</h1>
+    <div class="subhead czizh-text">
+        ⋆｡°✩ перья, пух, сияние глаз, хвостовые кисти и мимикрия ✩°｡⋆
+    </div>
+
+    <!-- ===== БОЛЬШОЕ МЕСТО ДЛЯ ГЛАВНОГО ИЗОБРАЖЕНИЯ ===== -->
+    <div class="hero-image-placeholder">
+        <div class="placeholder-icon">༄</div>
+        <div class="placeholder-text">✧ ЗДЕСЬ БУДЕТ ГЛАВНОЕ ИЗОБРАЖЕНИЕ ДРАКОНА РЮУ ✧</div>
+        <div style="font-size: 0.8rem; color: #6b685e; margin-top: 0.5rem;">вставьте файл: ryuu-main-art.jpg</div>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: ФОРМА ТЕЛА И СИЛУЭТ ===== -->
+    <h2 class="section-title">ФОРМА ТЕЛА И СИЛУЭТ</h2>
+    
+    <div class="content-grid">
+        <div class="content-text">
+            <p><strong>Общая форма:</strong> Змееподобная, но гораздо тоньше обычных драконов. В отличие от змей, у них нет пропорционального расширения в середине торса. Тело очень тонкое, расширяется только в области плеч, груди и бедер. Благодаря этому они невероятно легкие и маневренные.</p>
+            <p><strong>Размеры:</strong> Взрослая особь может достигать 10 метров в длину. Новорожденные размером с человеческий палец. По сравнению с другими драконами — довольно мелкие. Конечности короткие, но когда они садятся на задние лапы, опираясь на хвост, то могут достигать высоты небольшого дерева.</p>
+            <p><strong>Шея:</strong> Длинная и грациозная, такая же ровная и сильная, как и остальное тело.</p>
+        </div>
+        
+        <!-- ===== МЕСТО ДЛЯ КАРТИНКИ: форма тела ===== -->
+        <div class="image-placeholder">
+            <div class="placeholder-icon">𓆈</div>
+            <div class="placeholder-text">✧ СИЛУЭТ И ФОРМА ТЕЛА ✧</div>
+            <div style="font-size: 0.8rem; color: #6b685e;">ryuu-silhouette.jpg</div>
+        </div>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: ГОЛОВА ===== -->
+    <h2 class="section-title">ГОЛОВА</h2>
+    
+    <div class="content-grid">
+        <!-- ===== МЕСТО ДЛЯ КАРТИНКИ: голова анфас ===== -->
+        <div class="image-placeholder">
+            <div class="placeholder-icon">꧂</div>
+            <div class="placeholder-text">✧ ГОЛОВА АНФАС ✧</div>
+            <div style="font-size: 0.8rem; color: #6b685e;">ryuu-head-front.jpg</div>
+        </div>
+        
+        <div class="content-text">
+            <p><strong>Форма черепа:</strong> Лисья, с характерными чертами.</p>
+            <p><strong>Глаза:</strong> Бисеровидные, миндалевидные, глубочайшие черные омуты. Могут светиться при использовании магии — это выглядит как паутина тонких нитей личного цвета (у каждого дракона свой цвет). В обычном состоянии зрачки не видны из-за черной окраски глаз, но они есть — кошачьи вертикальные щели.</p>
+            <p><strong>Уши:</strong> Большие (размером в треть головы), изначально кошачьей формы, но покрыты мелкими перьями, поэтому больше похожи на совиные кисточки. Постоянно двигаются, поворачиваясь к источнику звука. Уши — индикатор настроения дракона.</p>
+            <p><strong>Усы:</strong> Почти все Рюу имеют два длинных уса, как у китайских драконов. Они похожи на кошачьи вибриссы — очень-очень чувствительные волоски.</p>
+        </div>
+    </div>
+
+    <!-- Подраздел: Пасть и зубы -->
+    <h3 class="subsection-title">ПАСТЬ И ЗУБЫ</h3>
+    
+    <div class="content-grid">
+        <div class="content-text">
+            <p>Пасть полна крошечных острых зубов. Они недостаточно острые и крупные для охоты на крупную добычу или разрывания шкуры, но идеально подходят для рыбы, птиц, личинок и фруктов. У самцов есть 2-4 выраженных клыка, как у змей, но без яда.</p>
+        </div>
+        
+        <!-- ===== МЕСТО ДЛЯ КАРТИНКИ: пасть и зубы ===== -->
+        <div class="image-placeholder">
+            <div class="placeholder-icon">༒</div>
+            <div class="placeholder-text">✧ ПАСТЬ И ЗУБЫ ✧</div>
+            <div style="font-size: 0.8rem; color: #6b685e;">ryuu-maw.jpg</div>
+        </div>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: РОГА ===== -->
+    <h2 class="section-title">РОГА</h2>
+    
+    <div class="content-grid">
+        <!-- ===== МЕСТО ДЛЯ КАРТИНКИ: варианты рогов ===== -->
+        <div class="image-placeholder">
+            <div class="placeholder-icon">ᨒ</div>
+            <div class="placeholder-text">✧ ВАРИАНТЫ РОГОВ ✧</div>
+            <div style="font-size: 0.8rem; color: #6b685e;">ryuu-antlers.jpg</div>
+        </div>
+        
+        <div class="content-text">
+            <p>Рога есть только у самцов, они похожи на оленьи, но не такие ветвистые. Пропорциональны голове: на основном ответвлении есть несколько небольших ответвлений, и это всё. Начинают расти в подростковом возрасте.</p>
+        </div>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: ПОКРОВ ===== -->
+    <h2 class="section-title">ПОКРОВ</h2>
+    
+    <div class="content-text" style="flex: 100%; margin-bottom: 1rem;">
+        <p><strong>Шерсть и перья:</strong> Конечности и морда покрыты короткой бархатистой шерстью. Внешняя поверхность тела покрыта в основном длинными перьями; их длина варьируется в зависимости от части тела. На внутренней стороне (живот, под конечностями) перья короче, пушистее и мягче. У всех драконов этого вида есть подшерсток из меха под перьями, который не дает им выглядеть как мокрая крыса и делает их пушистыми и мягкими. Детеныши до 15 лет покрыты пухом, который постепенно сменяется перьями.</p>
+        </div>
+    
+    <div class="content-grid">
+        <!-- ===== МЕСТО ДЛЯ КАРТИНКИ: текстура перьев ===== -->
+        <div class="image-placeholder">
+            <div class="placeholder-icon">ཐི༏ཋྀ</div>
+            <div class="placeholder-text">✧ ТЕКСТУРА ПЕРЬЕВ ✧</div>
+            <div style="font-size: 0.8rem; color: #6b685e;">ryuu-feathers.jpg</div>
+        </div>
+        
+        <div class="content-text">
+            <p><strong>Окрас и ирризация:</strong> Варьируются. Цвет оперения зависит от магии, которой владеет клан. По миру существует множество кланов с разными доминирующими цветами. Оперение служит камуфляжем, и драконы используют это по максимуму. Иридисцентные перья могут вырасти только при наличии особых качеств, например, особой крови, уровня магической силы или особого воспитания.</p>
+        </div>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: ОСОБЫЕ ЧЕРТЫ ===== -->
+    <h2 class="section-title">ОСОБЫЕ ЧЕРТЫ</h2>
+    
+    <div class="content-grid">
+        <div class="content-text">
+            <p><strong>Индивидуальные особенности:</strong> Особи могут иметь пучки волос от головы до хвоста вдоль позвоночника, пучки на ушах, пучки на щеках, пучки на сгибах конечностей, пушистые конечности (мех, а не перья), жабо на груди (в основном у самок) и длинные перья на голове (как у птицы-секретаря). Каждая особь может иметь несколько особенностей или не иметь их вовсе.</p>
+            <p><strong>Хвостовая кисточка:</strong> Есть у всех без исключения — состоит из особенно длинных, но чрезвычайно мягких перьев (как у белой цапли в брачный период) и длинного меха.</p>
+        </div>
+        
+        <!-- ===== МЕСТО ДЛЯ КАРТИНКИ: хвостовая кисточка ===== -->
+        <div class="image-placeholder">
+            <div class="placeholder-icon">༺✧༻</div>
+            <div class="placeholder-text">✧ ХВОСТОВАЯ КИСТОЧКА ✧</div>
+            <div style="font-size: 0.8rem; color: #6b685e;">ryuu-tail-tuft.jpg</div>
+        </div>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: КОНЕЧНОСТИ ===== -->
+    <h2 class="section-title">КОНЕЧНОСТИ</h2>
+    
+    <div class="content-grid">
+        <!-- ===== МЕСТО ДЛЯ КАРТИНКИ: строение лап ===== -->
+        <div class="image-placeholder">
+            <div class="placeholder-icon">⸙</div>
+            <div class="placeholder-text">✧ СТРОЕНИЕ ЛАП ✧</div>
+            <div style="font-size: 0.8rem; color: #6b685e;">ryuu-limbs.jpg</div>
+        </div>
+        
+        <div class="content-text">
+            <p><strong>Передние и задние конечности:</strong> Ящероподобные; Рюу живут на крутых скалах и роют норы, поэтому их конечности приспособлены для цепляния и ползания. Они бегают так же быстро, как ящерицы, но так же ограничены. Конечности довольно короткие, но очень гибкие. В отличие от ящериц, их конечности лишь слегка смещены в стороны, но гибкость позволяет им бегать плоско, как ящерица, или стоять прямо и бегать, как любое другое животное.</p>
+            <p><strong>Когти:</strong> Птичьи, с небольшими коготками. Могут быть покрыты очень коротким мехом или перьями, но редко. Идеальны для хватания, но крошечные.</p>
+        </div>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: КРЫЛЬЯ И ПОЛЕТ ===== -->
+    <h2 class="section-title">КРЫЛЬЯ И ПОЛЕТ</h2>
+    
+    <div class="content-text" style="margin-bottom: 1rem;">
+        <p>У них нет крыльев. Но они всё равно могут летать. Хотя драконы обладают магией, для полета они в первую очередь используют воздух. Мускулы влияют на полет — они используют их, чтобы отталкиваться от воздушных потоков, менять направление или удерживать себя в воздухе. Таким образом, для полета им нужны воздушные потоки и сильное, но легкое и маневренное тело. Молодые особи учатся летать только по достижении 20-25 лет, так как обычно именно в этом возрасте они достигают нужного веса тела.</p>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: ХВОСТ ===== -->
+    <h2 class="section-title">ХВОСТ</h2>
+    
+    <div class="content-grid">
+        <div class="content-text">
+            <p><strong>Форма и функции:</strong> Хвост тоже длинный — его длина составляет половину длины остального тела вместе с шеей. У него много функций:</p>
+            <ul class="feature-list">
+                <li><strong>Атака:</strong> Тонкий, но достаточно мощный для удара; используется для удушения.</li>
+                <li><strong>Баланс:</strong> В полете это не руль, как у других существ, а инструмент для отталкивания от воздуха благодаря своей большой длине.</li>
+                <li><strong>Тепло:</strong> Они сворачиваются кольцами для сна, и хвост — внешнее кольцо, которое сохраняет тепло. Зимой используется для защиты.</li>
+                <li><strong>Защита:</strong> Хвост — средство защиты детенышей. Используется как манеж или барьер, а кисточка на его кончике — как подстилка.</li>
+                <li><strong>Спаривание:</strong> Одно из главных средств привлечения самки или самца. Хвост — гордость этого вида драконов. Дракон без хвоста — мертвый дракон.</li>
+            </ul>
+        </div>
+        
+        <!-- ===== МЕСТО ДЛЯ КАРТИНКИ: хвост в действии ===== -->
+        <div class="image-placeholder">
+            <div class="placeholder-icon">𓃉</div>
+            <div class="placeholder-text">✧ ХВОСТ В ДЕЙСТВИИ ✧</div>
+            <div style="font-size: 0.8rem; color: #6b685e;">ryuu-tail.jpg</div>
+        </div>
+    </div>
+
+    <!-- ===== РАЗДЕЛ: ЛИНЬКА ===== -->
+    <h2 class="section-title">ЛИНЬКА</h2>
+    
+    <div class="content-text">
+        <p>Драконы Рюу линяют несколько раз в год, и этот процесс может быть неприятным и даже болезненным. К зиме перьев становится больше, появляется подшерсток и мелкие пуховые перья. К весне, в брачный сезон, часть подшерстка выпадает, оставляя их мягкими и пушистыми, но уже не такими теплыми; вырастает более декоративное оперение. К лету весь подшерсток выпадает полностью, а основное длинное оперение сменяется новым.</p>
+    </div>
+
+    <!-- Разделитель -->
+    <hr>
+
+    <!-- Кнопка возврата на главную -->
+    <div style="text-align: center;">
+        <a href="Ryuu_main.html" class="back-button">✧ ВЕРНУТЬСЯ К ВРАТАМ ✧</a>
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <span>☁</span> шепотом, на рассвете <span>☁</span><br>
+        by Alkeiz · по мотивам старых легенд
+    </footer>
+
+</div>
+
+<!-- Маленький декоративный элемент -->
+<div class="lanugo-dots" style="background: radial-gradient(circle at 30% 30%, #b6b9a8 1px, transparent 1px); background-size: 20px 20px; opacity: 0.2; height: 20px; width: 80%; margin: 1rem auto 0;"></div>
+
+</body>
+</html>
