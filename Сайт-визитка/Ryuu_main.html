@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шепот Рюу · Врата в Легенду</title>
+    <style>
+
+        /* Сброс стилей и основные шрифты */
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+
+       body {
+        font-family: 'Czizh body', 'Georgia', 'Times New Roman', 'Palatino', serif;
+
+        /* Градиентный фон */
+        background: linear-gradient(
+        180deg,
+        #030514 0%,
+        #0c1a24 15%,
+        #132c35 30%,
+        #1e3b48 45%,
+        #2d4a5a 60%,
+        #3a5b6b 70%,
+        #4b6f82 80%,
+        #608a9a 87%,
+        #8bb4c0 93%,
+        #c9dae0 97%,
+        #e6e2da 100%);
+       background-attachment: fixed;
+       color: #d6d0c4;
+       line-height: 1.7;
+       min-height: 100vh;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       padding: 2rem 1rem;
+       margin: 0;}
+
+      /* Звезды */
+      .stars-container {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: auto;
+       min-height: 100%;
+       pointer-events: none;
+       z-index: -1;
+       overflow: visible;}
+
+      /* Стили для звезд */
+      .star {
+       position: absolute;
+       color: rgba(230, 220, 200, 0.6);
+       user-select: none;
+       white-space: nowrap;
+       animation: twinkle 4s infinite ease-in-out;
+       transform-origin: center;
+       text-shadow: 0 0 5px currentColor;}
+
+       /* Анимация мерцания */
+       @keyframes twinkle {
+       0% { opacity: 0.2; transform: scale(0.8); }
+       50% { opacity: 1; transform: scale(1.2); }
+       100% { opacity: 0.2; transform: scale(0.8); }}
+
+       /* Символ луны в правом верхнем углу */
+       .stars-container .moon-symbol {
+        position: relative;
+        
+        font-size: 4rem;
+        color: #f0e6d2;
+        text-shadow: 
+        0 0 10px #fff9e6,
+        0 0 20px #d4c2a8,
+        0 0 30px #9e8f72,
+        0 0 40px #6f7d68;
+        animation: moon-glow 3s ease-in-out infinite;
+        cursor: pointer;}
+
+       /* Анимация мерцания */
+       @keyframes moon-glow {
+        0% { text-shadow: 0 0 10px #fff9e6, 0 0 20px #d4c2a8, 0 0 30px #9e8f72, 0 0 40px #6f7d68; }
+        50% { text-shadow: 0 0 15px #fff9e6, 0 0 30px #d4c2a8, 0 0 45px #9e8f72, 0 0 60px #6f7d68; }
+        100% { text-shadow: 0 0 10px #fff9e6, 0 0 20px #d4c2a8, 0 0 30px #9e8f72, 0 0 40px #6f7d68; }}
+
+       .stars-container a {
+        pointer-events: auto;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        position: absolute;  /* чтобы позиционировать ссылку там же, где луна */
+        top: 20px;
+        right: 30px;
+        z-index: 1000;}  /* чуть выше, чем у луны */
+
+       /* Основной контейнер — большая плашка */
+       .main-wrapper {
+        max-width: 1000px;
+        width: 100%;
+        background: rgba(22, 24, 32, 0.75);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(170, 150, 130, 0.25);
+        border-radius: 32px 32px 24px 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(200, 180, 150, 0.1) inset;
+        padding: 3rem 2.5rem;}
+
+       /* Элементы декора */
+       .header-decoration {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        opacity: 0.7;
+        font-size: 1.8rem;
+        color: #a88e6b;
+        letter-spacing: 6px;}
+
+        /* Главный заголовок */
+        h1 {
+         font-family: 'venera_initial', 'Palatino', 'Georgia', serif;
+         font-weight: 300;
+         font-size: 4rem;
+         text-align: center;
+         margin-bottom: 0.25rem;
+         color: #ece4d7;
+         text-shadow: 0 0 10px rgba(210, 190, 160, 0.4), 0 4px 8px rgba(0, 0, 0, 0.6);
+         letter-spacing: 6px;
+         word-break: break-word;}
+
+        .subhead {
+         text-align: center;
+         font-size: 1.2rem;
+         font-style: italic;
+         color: #bcae92;
+         border-top: 1px dashed #5f6b5f;
+         border-bottom: 1px dashed #5f6b5f;
+         padding: 0.8rem 0;
+         margin: 1.5rem 0 3rem 0;
+         word-spacing: 4px;
+         background: rgba(10, 12, 16, 0.3);}
+
+        /* Ссылки-врата (разделы; пока не работают) */
+        .gate-section {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         gap: 2rem 1rem;
+         margin: 3.5rem 0 2rem;}
+
+        .gate-card {
+         background: rgba(30, 33, 42, 0.7);
+         border: 1px solid #6c7a6b;
+         border-radius: 48px 16px 48px 16px;
+         padding: 2rem 1.5rem;
+         min-width: 180px;
+         text-align: center;
+         transition: all 0.3s ease;
+         box-shadow: 0 10px 20px -5px rgba(0,0,0,0.8);
+         backdrop-filter: blur(2px);
+         flex: 1 1 180px;}
+
+        /* Анимация левитации при наведении курсора */
+        .gate-card:hover {
+         transform: translateY(-8px);
+         border-color: #bfa67a;
+         box-shadow: 0 15px 25px -5px #000, 0 0 15px #5d836b40;
+         background: rgba(38, 43, 55, 0.9);}
+
+        .gate-card a {
+         text-decoration: none;
+         color: #dbd0bd;
+         font-size: 1.8rem;
+         font-weight: 300;
+         display: block;
+         font-family: 'Palatino', serif;
+         letter-spacing: 2px;}
+
+        .gate-card p {
+         margin-top: 1rem;
+         font-size: 0.9rem;
+         color: #b7a98b;
+         border-top: 1px dotted #556b55;
+         padding-top: 0.7rem;}
+
+        .gate-icon {
+         font-size: 2.8rem;
+         margin-bottom: 0.5rem;
+         filter: drop-shadow(0 2px 4px #261e12);}
+
+        /* Цитата */
+        .whisper {
+         margin: 4rem 0 2rem;
+         font-style: italic;
+         text-align: center;
+         font-size: 1.4rem;
+         line-height: 1.4;
+         color: #b9ad94;
+         background: rgba(12, 15, 10, 0.4);
+         padding: 1.8rem;
+         border-radius: 60px 8px 60px 8px;
+         border-left: 3px solid #9e8f72;
+         border-right: 3px solid #9e8f72;
+         max-width: 800px;
+         margin-left: auto;
+         margin-right: auto;}
+
+        footer {
+         margin-top: 3rem;
+         text-align: center;
+         color: #6b685e;
+         font-size: 1rem;
+         border-top: 1px solid #334033;
+         padding-top: 1.5rem;
+         /* text-transform: uppercase; */
+         letter-spacing: 3px;}
+
+        /* для ссылок на внешние разделы (в разработке...) */
+        .note {
+         font-size: 0.9rem;
+         color: #9b947f;
+         background: #1d2320;
+         padding: 0.5rem 1rem;
+         border-radius: 40px;
+         display: inline-block;}
+
+        hr {
+         border: none;
+         height: 1px;
+         background: linear-gradient(90deg, transparent, #7c886b, #d5bb8b, #7c886b, transparent);
+         margin: 2rem 0;}
+
+        /* для мелких деталей */
+        .lanugo-dots {
+         background: radial-gradient(circle at 30% 30%, #b6b9a8 1px, transparent 1px);
+         background-size: 20px 20px;
+         opacity: 0.2;
+         height: 20px;
+         width: 100%;}
+
+        /* Подключение шрифта Czizh body */
+        @font-face {
+         font-family: 'Czizh body';
+         src: url('czizh_body.woff2') format('woff2'),
+              url('czizh_body.ttf') format('truetype'); /* Добавьте другие форматы, если есть */
+         font-weight: normal;
+         font-style: normal;
+         font-display: swap; /* Улучшает загрузку страницы */}
+
+        .czizh-text {
+         font-family: 'czizh_body', 'Georgia', 'Times New Roman', serif !important}
+
+        /* Подключение шрифта Venera Initial */
+        @font-face {
+         font-family: 'venera_initial';
+         src: url('venera_initial.woff2') format('woff2'),
+              url('venera_initial.ttf') format('truetype');
+         font-weight: normal;
+         font-style: normal;
+         font-display: swap;}
+
+         .venera-title {
+          font-family: 'venera_initial', 'Palatino', 'Georgia', serif;}
+
+        /* ВОЗВРАЩАЕМ ОСНОВНОЙ ШРИФТ ДЛЯ ВСЕХ ЭЛЕМЕНТОВ, КРОМЕ НУЖНЫХ ФРАЗ */
+        body, body * {
+         font-family: 'Georgia', 'Times New Roman', 'Palatino', serif !important;}
+
+        /* А теперь снова применяем шрифты только к нужным фразам */
+        .subhead, 
+        .whisper, 
+        footer .czizh-text,
+        .subhead *,
+        .whisper *,
+        .venera-title,
+        .gate-card a {
+        font-family: 'Czizh body', 'Georgia', 'Times New Roman', serif !important;}
+        /* ИСКЛЮЧЕНИЕ ДЛЯ ЗАГОЛОВКА */
+        .venera-title {
+        font-family: 'venera_initial', 'Palatino', 'Georgia', serif !important;}
+    </style>
+</head>
+
+<body>
+
+<!-- Контейнер для звезд  -->
+<div class="stars-container">
+    <script>
+         (function() {
+          const starsContainer = document.currentScript.parentNode;
+          const symbols = ['✧', '✦', '⋆', '☆', '༄', '༒', '·', '∘', '˙', '❀', '✶', '·', '。', '°', '☾', '·', '·', '·'];
+            
+          /* Делаем ОЧЕНЬ МНОГО звезд */
+          for (let i = 0; i < 800; i++) {
+           const star = document.createElement('span');
+           star.className = 'star';
+                
+           /* Случайный символ */
+           const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+           star.textContent = randomSymbol;
+                
+           /* Позиция в процентах от высоты страницы */
+           const top = Math.random() * 300; // от 0% до 200% высоты окна
+           const left = Math.random() * 100;
+                
+           /* Размер */
+           const size = 1 + Math.random() * 8;
+                
+           /* Прозрачность */
+           const opacity = 0.1 + Math.random() * 0.5;
+           star.style.position = 'absolute';
+           star.style.top = top + '%';
+           star.style.left = left + '%';
+           star.style.fontSize = size + 'px';
+           star.style.opacity = opacity;
+           star.style.animation = 'twinkle ' + (2 + Math.random() * 4) + 's infinite ease-in-out';
+           star.style.animationDelay = (Math.random() * 5) + 's';     
+           starsContainer.appendChild(star);}
+            
+          /* Добавляем еще самых мелких точек для заполнения */
+          for (let i = 0; i < 800; i++) {
+           const dot = document.createElement('span');
+           dot.className = 'star';
+           dot.textContent = '·';              
+           const top = Math.random() * 200;
+           const left = Math.random() * 100;
+           const size = 1 + Math.random() * 3;               
+           dot.style.position = 'absolute';
+           dot.style.top = top + '%';
+           dot.style.left = left + '%';
+           dot.style.fontSize = size + 'px';
+           dot.style.opacity = 0.1 + Math.random() * 0.3;
+           dot.style.animation = 'none';
+           starsContainer.appendChild(dot);}})();
+    </script>
+</div>
+
+    <!-- Луна -->
+    <a href="moon_video.html" target="_self" rel="noopener noreferrer" style="position: absolute; top: 20px; right: 30px; z-index: 1000; text-decoration: none;">
+    <div style="font-size: 4rem; color: #f0e6d2; text-shadow: 0 0 10px #fff9e6, 0 0 20px #d4c2a8, 0 0 30px #9e8f72, 0 0 40px #6f7d68; animation: moon-glow 3s ease-in-out infinite; cursor: pointer;">☾</div>
+    </a>
+
+<!-- Контейнер для падающих перьев  -->
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden;">
+    <style>
+        @keyframes fall {
+         0% {
+          transform: translateY(-20vh) rotate(0deg);
+          opacity: 0.15;}
+         10% {
+          opacity: 0.3;}
+         90% {
+          opacity: 0.45;}
+         100% {
+          transform: translateY(120vh) rotate(360deg);
+          opacity: 0.6;}}
+
+        @keyframes twinkle {
+         0% { opacity: 0.1; transform: scale(0.8); }
+         50% { opacity: 0.5; transform: scale(1.2); }
+         100% { opacity: 0.1; transform: scale(0.8); }}
+
+        @keyframes float {
+         0% { transform: translate(0, 0); }
+         50% { transform: translate(10px, -10px); }
+         100% { transform: translate(0, 0); }}
+        
+        .falling-feather {
+         position: absolute;
+         font-size: 3rem;
+         color: #c0b29a;
+         animation: fall 20s linear infinite;
+         filter: drop-shadow(0 0 5px rgba(200, 180, 150, 0.3));
+         opacity: 0;
+         white-space: nowrap;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         mix-blend-mode: screen;}
+        
+        /* Поворачиваем некоторые элементы для совмещения */
+        .rotated-bottom {
+         display: inline-block;
+         transform: rotate(90deg) scaleY(-1);
+         margin-left: -12px;}
+        .rotated-middle {
+         display: inline-block;
+         transform: rotate(90deg) scaleY(-1);
+         margin: 0 -8px;}
+        .rotated-upper {
+         display: inline-block;
+         transform: rotate(180deg) scaleY(-1);
+         margin-right: -15px;
+         margin-bottom: 50px;
+         transform-origin: center;}
+
+        /* Цвета для перышек */
+        .feather-1 { color: #c0c0d0; filter: drop-shadow(0 0 10px #a0a0d0); } /* серебро */
+        .feather-2 { color: #a0b0d0; filter: drop-shadow(0 0 10px #8090c0); } /* голубой */
+        .feather-3 { color: #b0a0d0; filter: drop-shadow(0 0 10px #9070b0); } /* фиолетовый */
+        .feather-4 { color: #90a0c0; filter: drop-shadow(0 0 10px #7080b0); } /* индиго */
+        .feather-5 { color: #a0a0c0; filter: drop-shadow(0 0 10px #8080b0); } /* сиреневый */
+        .feather-6 { color: #1a1f2e; filter: drop-shadow(0 0 10px #4a7a9c) drop-shadow(0 0 10px #2a4a6a);text-shadow: 0 0 10px #3a6a8c;} 
+    </style>
+
+    <!-- Перо 1 -->
+    <div class="falling-feather feather-1" style="left: 5%; animation-delay: 0s; animation-duration: 22s;">
+    <span class="rotated-upper">꧂</span>
+    <span class="rotated-middle">ཐི༏ཋྀ</span>
+    <span class="rotated-bottom">༒</span>
+    </div>
+
+    <!-- Перо 2 -->
+    <div class="falling-feather feather-2" style="left: 25%; animation-delay: 5s; animation-duration: 25s;">
+    <span class="rotated-upper">꧂</span>
+    <span class="rotated-middle" style="font-size: 3.5rem;">ཐི༏ཋྀ</span>
+    <span class="rotated-bottom" style="font-size: 2.8rem;">༒</span>
+    </div>
+
+    <!-- Перо 3 -->
+    <div class="falling-feather feather-3" style="left: 45%; animation-delay: 2s; animation-duration: 28s;">
+    <span class="rotated-upper">꧂</span>
+    <span class="rotated-middle" style="font-size: 4rem; margin: 0 -12px;">ཐི༏ཋྀ</span>
+    <span class="rotated-bottom" style="font-size: 3.5rem;">༒</span>
+    </div>
+
+    <!-- Перо 4 -->
+    <div class="falling-feather feather-4" style="left: 65%; animation-delay: 12s; animation-duration: 30s; opacity: 0.08;">
+    <span class="rotated-upper" style="opacity: 0.6;">꧂</span>
+    <span class="rotated-middle" style="opacity: 0.6;">ཐི༏ཋྀ</span>
+    <span class="rotated-bottom" style="opacity: 0.6;">༒</span>
+    </div>
+
+    <!-- Перо 5 -->
+    <div class="falling-feather feather-5" style="left: 85%; animation-delay: 8s; animation-duration: 24s; opacity: 0.05;">
+    <span class="rotated-upper">꧂</span>
+    <span class="rotated-middle">ཐི༏ཋྀ</span>
+    <span class="rotated-bottom">༒</span>
+    </div>
+
+    <!-- Перо 6 -->
+    <div class="falling-feather feather-6" style="left: 15%; animation-delay: 3s; animation-duration: 26s; opacity: 0.1;">
+    <span class="rotated-upper">꧂</span>
+    <span class="rotated-middle">ཐི༏ཋྀ</span>
+    <span class="rotated-bottom">༒</span>
+    </div>
+</div>
+
+    <div class="main-wrapper">
+
+        <!-- Верхний декор -->
+        <div class="header-decoration">
+         <span>⁺˚࿐⋆｡°✩₊⋆˖⁺‧₊༯‧⁺˖⋆₊✩°𓆂｡⋆ྀི˚⁺⋆｡ﾟ𓆱｡⋆｡ ﾟ｡⋆</span>
+        </div>
+
+        <!-- Главный заголовок -->
+        <h1><span class="venera-title">РЮУ</span></h1>
+        <h2 style="text-align: center; font-weight: 200; color: #b0a28b; margin-top: -0.2rem;">︴драконы шепчущего ветра ︴</h2>
+
+        <div class="subhead czizh-text">
+        ⋆｡°✩ существа между светом и тенью, чьи перья хранят память звёзд ✩°｡⋆
+        </div>
+
+        <!-- Краткое описание -->
+        <p style="font-size: 1.15rem; text-align: justify; max-width: 800px; margin: 2rem auto;">
+            Рюу — не просто драконы. Это живое напоминание о том, что магия дышит в каждой трещине реальности. 
+            Их тела — гибкий шелк и перламутр, их глаза — бездонные колодцы, где вместо зрачков — кошачьи щели. 
+            Они лишены крыльев, но танцуют в небе, оседлав ветер. Хрупкие, как сухие листья, и прекрасные, как падающая звезда. 
+            Их пух светится в сумерках, а хвостовые кисточки — это их гордость и колыбель для детёнышей. 
+            Рюу боятся людей, но именно в этой боязни — их древняя, выжженная одиночеством мудрость.
+        </p>
+
+        <!-- Визуальный разделитель -->
+        <hr>
+
+        <!-- Блок ссылок на разделы (врата) -->
+        <div style="text-align: center; margin: 2rem 0 1rem;">
+        <span style="background: #28312a; padding: 0.5rem 2rem; border-radius: 100px; color: #dbbd91; letter-spacing: 3px;">❖  В Р А Т А  ❖</span>
+        </div>
+
+        <div class="gate-section">
+
+        <!-- Карточка 1: Облик и природа -->
+        <div class="gate-card">
+        <div class="gate-icon">༄</div>
+        <a href="Ryuu_oblik.html">Облик и природа</a>
+        <p>перья, пух, сияние глаз, хвостовые кисти и мимикрия</p>
+        </div>
+
+        <!-- Карточка 2: Жизненный цикл -->
+        <div class="gate-card">
+        <div class="gate-icon">𓆈⬭</div>
+        <a href="zhizn.html">Жизненный цикл</a>
+        <p>от новорождённого пальчика до древнего, перерождение и ритуалы</p>
+        </div>
+
+        <!-- Карточка 3: Клан и обычаи -->
+        <div class="gate-card">
+        <div class="gate-icon">ᨒ</div>
+        <a href="klan.html">Клан и обычаи</a>
+        <p>иерархия, гнёзда, роли, ухаживания и драконьи танцы</p>
+        </div>
+
+        <!-- Карточка 4: Магия и люди -->
+        <div class="gate-card">
+        <div class="gate-icon">⊹˚</div>
+        <a href="magia.html">Магия и люди</a>
+        <p>эфир, охота, страх и невозможная дружба</p>
+        </div>
+   </div>
+
+   <!-- Маленький "шепот" -->
+   <div class="whisper czizh-text">
+   <span style="font-size: 2em; color: #6f7d68; margin-right: 5px;">“</span>
+        Они не говорят с тобой — они звучат внутри. Если ветер принесёт оброненное перо, спрячь его. Быть может, Рюу вернётся за ним.
+   <span style="font-size: 2em; color: #6f7d68; margin-left: 5px;">”</span>
+   </div>
+
+   <!-- Изображение -->
+   <div style="margin: 2rem 0; border-radius: 120px; overflow: hidden; opacity: 0.9; border: 1px solid #7f8f7a; position: relative; left: 30px; width: 90%;">
+   <img src="ryuu-mist.jpg" alt="Силуэт дракона Рюу в тумане" style="max-width: 100%; height: auto; display: block; filter: grayscale(0.5) contrast(1.2); margin-left: auto; margin-right: 0;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+   <div style="display: none; padding: 3rem; background: #262d29; color: #c8bc9a;">✧ здесь будет танец дракона ✧</div>
+</div>
+
+    <!-- Блок "предметы/хобби" -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 2rem; justify-content: center;">
+    <div style="background: #1f2623; padding: 1.5rem; border-radius: 30px 8px; min-width: 200px;">
+    <h3 style="color: #d4b68a; font-weight: 300; border-bottom: 1px solid #677367; padding-bottom: 0.5rem;">✻ Что любят Рюу</h3>
+    <ul style="margin-top: 1rem; list-style-type: '⸙ '; padding-left: 1.5rem;">
+      <li>небо перед грозой</li>
+      <li>обронённые человеком блестящие вещи</li>
+      <li>песок, нагретый солнцем</li>
+    </ul>
+    </div>
+
+    <div style="background: #1f2623; padding: 1.5rem; border-radius: 8px 30px; min-width: 200px;">
+    <h3 style="color: #d4b68a; font-weight: 300; border-bottom: 1px solid #677367; padding-bottom: 0.5rem;">✻ Что их печалит</h3>
+    <ol style="margin-top: 1rem; list-style-type: '⸙ '; padding-left: 1.5rem;">
+       <li>запах железа и бензина</li>
+       <li>одиночество дольше, чем луна</li>
+       <li>непослушные перья и пух</li>
+    </ol>
+    </div>
+</div>
+
+    <!-- Ссылка на ресурс о драконах -->
+    <div style="text-align: center; margin: 3rem 0 1rem;">
+    <a href="https://boosty.to/behanescave/posts/11daafab-7ece-431b-8ca0-b3ac8c89a196" style="color: #c7b594; text-decoration: none; border: 1px solid #91856c; padding: 0.7rem 2rem; border-radius: 40px; background: #232d28; font-size: 0.95rem;">✧ полететь учиться драконьим истокам ✧</a>
+    <p style="margin-top: 0.5rem; color: #7a7d6f; font-size: 0.8rem;"></p>
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+    <span>☁</span> <span class="czizh-text">По мотивам старых легенд и файла «Hope and Dandelions»</span> <span>☁</span><br>
+    <span>‧₊˚</span> <span class="czizh-text">Шепотом, на рассвете</span> <span>˚₊‧</span><br>
+                    <span class="czizh-text">by Alkeiz</span>
+    </footer>
+    </div>
+    <!-- маленький декоративный элемент внизу -->
+    <div class="lanugo-dots" style="margin-top: 1rem; width: 80%;"></div>
+</body>
+</html>
